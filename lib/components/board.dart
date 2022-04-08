@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:sudoku/components/board_cell.dart';
 
 import '../models/game.dart';
 
@@ -26,17 +27,15 @@ class Board extends StatelessWidget {
     );
     List<Widget> boardRows = [];
 
-    var boardRow = BoardRow(cells: [
-      for (var i = 0; i < 9; i++)
-        GameCell(
-          isSelected: false,
-          number: "1",
-          isRepeated: true,
-        )
-    ]);
+    for (var row = 0; row < 9; row++) {
+      boardRows.add(row % 3 == 0 ? thickDivider : thinDivider);
 
-    for (var i = 0; i < 9; i++) {
-      boardRows.add(i % 3 == 0 ? thickDivider : thinDivider);
+      var boardRow = BoardRow(
+        cells: [for (var col = 0; col < 9; col++) game.getCell(row, col)],
+        row: row,
+        onSelect: onCellClick,
+      );
+
       boardRows.add(boardRow);
     }
     boardRows.add(thickDivider);
@@ -52,10 +51,18 @@ class Board extends StatelessWidget {
 
 class BoardRow extends StatelessWidget {
   final List<GameCell> cells;
+  final int row;
+  final void Function(int, int) onSelect;
+
+  void select(int col) {
+    onSelect(row, col);
+  }
 
   const BoardRow({
     Key? key,
     required this.cells,
+    required this.row,
+    required this.onSelect,
   }) : super(key: key);
 
   @override
@@ -72,7 +79,7 @@ class BoardRow extends StatelessWidget {
 
     for (var i = 0; i < cells.length; i++) {
       boardCells.add(i % 3 == 0 ? thickDivider : thinDivider);
-      boardCells.add(const SizedBox(width: 10));
+      boardCells.add(BoardCell(gameCell: cells[i], onClick: () => select(i)));
     }
     boardCells.add(thickDivider);
 
