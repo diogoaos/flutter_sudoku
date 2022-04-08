@@ -9,14 +9,16 @@ class CongratulationScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Center(
-        child: Column(
-      children: [
-        const Text("Congratulations, you won!"),
-        TextButton(
-          onPressed: restartPressed,
-          child: const Text("Restart game?"),
-        )
-      ],
-    ));
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          const Text("Congratulations, you won!"),
+          TextButton(
+            onPressed: restartPressed,
+            child: const Text("Restart game?"),
+          )
+        ],
+      ),
+    );
   }
 }

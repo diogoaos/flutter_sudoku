@@ -3,15 +3,24 @@ import 'package:sudoku/components/board_cell.dart';
 
 import '../models/game.dart';
 
-class Board extends StatelessWidget {
+class Board extends StatefulWidget {
   final Game game;
-  final void Function(int, int) onCellClick;
 
   const Board({
     Key? key,
     required this.game,
-    required this.onCellClick,
   }) : super(key: key);
+
+  @override
+  State<Board> createState() => _BoardState();
+}
+
+class _BoardState extends State<Board> {
+  void onCellClick(row, col) {
+    setState(() {
+      widget.game.cellClick(row, col);
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -29,7 +38,7 @@ class Board extends StatelessWidget {
 
     for (var row = 0; row < 9; row++) {
       final rowCells = [
-        for (var col = 0; col < 9; col++) game.getCell(row, col)
+        for (var col = 0; col < 9; col++) widget.game.getCell(row, col)
       ];
 
       boardRows.add(row % 3 == 0 ? thickDivider : thinDivider);
@@ -83,7 +92,7 @@ class BoardRow extends StatelessWidget {
     boardCells.add(thickDivider);
 
     return Container(
-      height: 40,
+      height: 36,
       child: Row(
         mainAxisAlignment: MainAxisAlignment.center,
         children: boardCells,

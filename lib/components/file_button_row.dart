@@ -21,8 +21,6 @@ class FileButtonRow extends StatelessWidget {
     final numberButtons = numbers.characters.map(createButton).toList();
     return Container(
       margin: EdgeInsets.all(10),
-      width: 300,
-      height: 60,
       child: Column(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [

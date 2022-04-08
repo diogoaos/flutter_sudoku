@@ -35,7 +35,7 @@ class AnnotationToggle extends StatelessWidget {
           child: Text("Normal"),
         ),
         const SizedBox(
-          width: 40,
+          width: 36,
         ),
         ElevatedButton(
           style: buttonStyle(isToggled),

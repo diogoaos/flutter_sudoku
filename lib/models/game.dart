@@ -15,22 +15,41 @@ class Game {
       "000500790";
 
   final List<String> currentState = [for (var i = 0; i < 81; i++) "0"];
+  final List<Set<int>> currentAnnotations = [for (var i = 0; i < 81; i++) {}];
 
   void toggle() {
     _isToggled = !_isToggled;
   }
 
   void numberPressed(String numberPressed) {
-    if (numberPressed == 'X') {
-      numberPressed = "0";
+    if (selected[0] == null || selected[1] == null) {
+      return;
     }
 
-    if (selected[0] != null && selected[1] != null) {
-      int r = selected[0]!;
-      int c = selected[1]!;
+    int r = selected[0]!;
+    int c = selected[1]!;
+
+    if (!_isToggled) {
+      if (numberPressed == 'X') {
+        numberPressed = "0";
+      }
 
       if (isReadOnly(r, c)) return;
       currentState[r * 9 + c] = numberPressed;
+    } else {
+      if (numberPressed == 'X') {
+        currentAnnotations[r * 9 + c].clear();
+      } else {
+        var num = int.tryParse(numberPressed);
+        if (num == null) {
+          return;
+        }
+        if (currentAnnotations[r * 9 + c].contains(num)) {
+          currentAnnotations[r * 9 + c].remove(num);
+        } else {
+          currentAnnotations[r * 9 + c].add(num);
+        }
+      }
     }
   }
 
@@ -45,8 +64,11 @@ class Game {
       number: number(row, col),
       isRepeated: isRepeated(row, col),
       isReadOnly: isReadOnly(row, col),
+      annotations: annotations(row, col),
     );
   }
+
+  Set<int> annotations(int row, int col) => currentAnnotations[row * 9 + col];
 
   bool isSelected(int row, int col) => row == selected[0] && col == selected[1];
 
@@ -119,13 +141,20 @@ class GameCell {
   final String _number;
   final bool isRepeated;
   final bool isReadOnly;
+  final Set<int> _annotations;
 
   GameCell({
     required this.isSelected,
     required number,
     required this.isRepeated,
     required this.isReadOnly,
-  }) : _number = number;
+    required annotations,
+  })  : _number = number,
+        _annotations = annotations;
 
   String get number => _number == "0" ? "" : _number;
+
+  get annotations => _annotations;
+
+  bool get hasAnnotations => _annotations.isNotEmpty;
 }

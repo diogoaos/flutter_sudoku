@@ -35,12 +35,6 @@ class SudokuGame extends StatefulWidget {
 class _SudokuGameState extends State<SudokuGame> {
   final Game game = Game();
 
-  void onCellClick(int i, int j) {
-    setState(() {
-      game.cellClick(i, j);
-    });
-  }
-
   void onButtonClick(String buttonPressed) {
     setState(() {
       game.numberPressed(buttonPressed);
@@ -75,7 +69,7 @@ class _SudokuGameState extends State<SudokuGame> {
         focusNode: FocusNode(),
         child: Column(
           children: [
-            Board(game: game, onCellClick: onCellClick),
+            Board(game: game),
             FileButtonRow(onButtonClick: onButtonClick),
             AnnotationToggle(isToggled: game.isToggled, toggle: toggle)
           ],
@@ -98,6 +92,7 @@ class _SudokuGameState extends State<SudokuGame> {
         LogicalKeyboardKey.arrowDown: game.moveDown,
         LogicalKeyboardKey.arrowLeft: game.moveLeft,
         LogicalKeyboardKey.arrowRight: game.moveRight,
+        LogicalKeyboardKey.space: game.toggle,
       };
 
       final command = operator[event.logicalKey];
@@ -108,7 +103,7 @@ class _SudokuGameState extends State<SudokuGame> {
         return;
       }
 
-      final numbers = "123456789Xx";
+      const numbers = "123456789Xx";
       if (numbers.characters.contains(event.character ?? "Z")) {
         onButtonClick(event.character!.toUpperCase());
         return;
