@@ -29,12 +29,12 @@ class Game {
     int r = selected[0]!;
     int c = selected[1]!;
 
+    if (isReadOnly(r, c)) return;
+
     if (!_isToggled) {
       if (numberPressed == 'X') {
         numberPressed = "0";
       }
-
-      if (isReadOnly(r, c)) return;
       currentState[r * 9 + c] = numberPressed;
     } else {
       if (numberPressed == 'X') {
