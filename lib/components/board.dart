@@ -46,10 +46,12 @@ class _BoardState extends State<Board> {
     }
     boardRows.add(thickDivider);
 
-    return Container(
-      margin: EdgeInsets.all(10),
-      child: Column(
-        children: boardRows,
+    return IntrinsicWidth(
+      child: Container(
+        margin: EdgeInsets.all(10),
+        child: Column(
+          children: boardRows,
+        ),
       ),
     );
   }

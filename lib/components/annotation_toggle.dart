@@ -26,23 +26,26 @@ class AnnotationToggle extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Row(
-      mainAxisAlignment: MainAxisAlignment.center,
-      children: [
-        ElevatedButton(
-          style: buttonStyle(!isToggled),
-          onPressed: toggle,
-          child: Text("Normal"),
-        ),
-        const SizedBox(
-          width: 36,
-        ),
-        ElevatedButton(
-          style: buttonStyle(isToggled),
-          onPressed: toggle,
-          child: Text("Annotation"),
-        ),
-      ],
+    return Container(
+      margin: EdgeInsets.only(top: 10),
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          ElevatedButton(
+            style: buttonStyle(!isToggled),
+            onPressed: toggle,
+            child: Text("Normal"),
+          ),
+          const SizedBox(
+            width: 36,
+          ),
+          ElevatedButton(
+            style: buttonStyle(isToggled),
+            onPressed: toggle,
+            child: Text("Annotation"),
+          ),
+        ],
+      ),
     );
   }
 }

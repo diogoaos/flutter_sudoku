@@ -8,10 +8,13 @@ class FileButtonRow extends StatelessWidget {
     required this.onButtonClick,
   }) : super(key: key);
 
-  ElevatedButton createButton(String element) {
-    return ElevatedButton(
-      onPressed: () => onButtonClick(element),
-      child: Text(element),
+  Widget createButton(String element) {
+    return Container(
+      margin: EdgeInsets.symmetric(vertical: 2, horizontal: 5),
+      child: ElevatedButton(
+        onPressed: () => onButtonClick(element),
+        child: Text(element),
+      ),
     );
   }
 
@@ -19,20 +22,21 @@ class FileButtonRow extends StatelessWidget {
   Widget build(BuildContext context) {
     const numbers = "123456789X";
     final numberButtons = numbers.characters.map(createButton).toList();
-    return Container(
-      margin: EdgeInsets.all(10),
-      child: Column(
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-        children: [
-          Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: numberButtons.sublist(0, 5),
-          ),
-          Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: numberButtons.sublist(5),
-          ),
-        ],
+    return IntrinsicWidth(
+      child: Container(
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: numberButtons.sublist(0, 5),
+            ),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: numberButtons.sublist(5),
+            ),
+          ],
+        ),
       ),
     );
   }
