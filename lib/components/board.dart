@@ -28,15 +28,12 @@ class Board extends StatelessWidget {
     List<Widget> boardRows = [];
 
     for (var row = 0; row < 9; row++) {
+      final rowCells = [
+        for (var col = 0; col < 9; col++) game.getCell(row, col)
+      ];
+
       boardRows.add(row % 3 == 0 ? thickDivider : thinDivider);
-
-      var boardRow = BoardRow(
-        cells: [for (var col = 0; col < 9; col++) game.getCell(row, col)],
-        row: row,
-        onSelect: onCellClick,
-      );
-
-      boardRows.add(boardRow);
+      boardRows.add(BoardRow(cells: rowCells, row: row, onSelect: onCellClick));
     }
     boardRows.add(thickDivider);
 
@@ -68,10 +65,12 @@ class BoardRow extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     const thickDivider = VerticalDivider(
+      width: 2,
       thickness: 1,
       color: Colors.black,
     );
     const thinDivider = VerticalDivider(
+      width: 0.1,
       thickness: 0.5,
       color: Colors.black,
     );
@@ -84,7 +83,7 @@ class BoardRow extends StatelessWidget {
     boardCells.add(thickDivider);
 
     return Container(
-      height: 20,
+      height: 40,
       child: Row(
         mainAxisAlignment: MainAxisAlignment.center,
         children: boardCells,

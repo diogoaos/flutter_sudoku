@@ -16,24 +16,38 @@ class BoardCell extends StatelessWidget {
     if (gameCell.isReadOnly) {
       return Colors.grey;
     }
-    if (gameCell.isRepeated) {
-      return Colors.redAccent;
-    }
     if (gameCell.isSelected) {
       return Colors.blueAccent;
     }
+    if (gameCell.isRepeated) {
+      return Colors.redAccent;
+    }
     return Colors.white;
+  }
+
+  Color get numberColor {
+    if ((gameCell.isReadOnly || gameCell.isSelected) && gameCell.isRepeated) {
+      return Colors.red;
+    }
+
+    if (gameCell.isReadOnly && gameCell.isSelected) {
+      return Colors.blue;
+    }
+    return Colors.black;
   }
 
   @override
   Widget build(BuildContext context) {
     return Container(
-      width: 20,
-      height: 20,
+      width: 40,
+      height: 40,
       decoration: BoxDecoration(color: cellColor),
       child: TextButton(
         onPressed: onClick,
-        child: Text(gameCell.number),
+        child: Text(
+          gameCell.number,
+          style: TextStyle(color: numberColor, fontWeight: FontWeight.bold),
+        ),
       ),
     );
   }
