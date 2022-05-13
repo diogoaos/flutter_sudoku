@@ -1,6 +1,6 @@
 # sudoku
 
-A simple sudoku game
+A simple sudoku game. The objective is to learn flutter.
 
 ## Getting Started
 
